@@ -6,7 +6,7 @@
 #    By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/11 14:35:23 by lde-batz          #+#    #+#              #
-#    Updated: 2019/02/12 16:39:18 by lde-batz         ###   ########.fr        #
+#    Updated: 2020/09/25 13:04:50 by lde-batz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ SRC := $(addprefix $(SRC_DIR), $(SRC))
 
 INC =	-I includes/fractol1.h -I includes/fractol2.h -I libft/srcs/libft.h
 
-LIB = -L libft/ -lft -L /usr/local/lib/ -lmlx
+LIB = -L libft/ -lft -L minilibx-linux/ -lmlx
 
 GCC = gcc -Wall -Wextra -Werror -o -o1 -o2 -o3
 
@@ -92,7 +92,7 @@ THREAD_FLAG = -lpthread
 
 .SILENT:
 
-all: lib $(NAME)
+all: libft libmlx $(NAME)
 
 $(NAME): $(OBJ)
 	$(GCC) -o $(NAME) $(SRC) $(LIB) $(MLX_FLAG) $(THREAD_FLAG)
@@ -105,8 +105,11 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(GCC) -c $< -o $@ $(INC)
 	printf '\033[0m[ ✔ ] %s\n\033[0m' "$<"
 
-lib:
+libft:
 	make -C libft
+
+libmlx:
+	make -C minilibx-linux
 
 clean:
 	make -C libft clean
